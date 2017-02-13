@@ -62,8 +62,6 @@ p.loadUserById = function(ids){
 
 };
 p.loadPagination = function(){
-  $('.pages').remove();
-  $j_pagenation.append(pagestyle);
   pg.pageCount = p.maxPage; // 定义总页数(必要)
   pg.argName = 'page';  // 定义参数名(可选,默认为page)
   pg.element = $j_pagenation; // 文本渲染在那个标签里面

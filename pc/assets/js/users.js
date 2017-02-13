@@ -8,10 +8,10 @@ p.init = function(){
   $j_pagenation = $('.j_pagenation');
   p.loadDatas();
   p.initEvent();
+  p.userName="";
+  p.userPwd="";
 };
 p.loadPagination = function(){
-  $('.pages').remove();
-  $j_pagenation.append(pagestyle);
   pg.pageCount = p.maxPage; // 定义总页数(必要)
   pg.argName = 'page';  // 定义参数名(可选,默认为page)
   pg.element = $j_pagenation; // 文本渲染在那个标签里面
@@ -203,7 +203,22 @@ function createLateEvent(){
             u.set('pid',data.id);
             u.save(null, {
               success: function(data) {
-                userObj.logOut();
+                // userObj.logOut();
+                // AV.User.logOut();
+                // AV.User.logIn(p.userName, p.userPwd, {
+                //     success: function(user) {
+                //       if(user && user.getObjectId()){
+                //         if(user.get('userRole') != 'Users'){
+                //             // if(user.get('userRole') == 'SuperAdmin'){
+                //             // fillAlert('登录成功,正在连接后台系统');
+                //             // waitRedirect('dashboard.html',1000);
+                //         }
+                //       }
+                //     },
+                //     error: function(user, error) {
+                //       fillAlert(errorEnum[error.code].msg);
+                //     }
+                // });
               },
               error: function(data, error) {
                 alert("添加失败 " + error.message);

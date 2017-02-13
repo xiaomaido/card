@@ -50,11 +50,11 @@ p.initData = function(){
 
 
 	// 查看总居委
-	p.publishArr=['城西','南门','金鳌山','玉环','西门北村','西泯沟','川心街','观潮','金珠','城中','明珠花苑','湄洲','新崇','吴家弄','小港','永凤','花园弄','海岛','北门','东门','怡祥居','东河沿','城东','江山','学宫','西门南村'];
+	// p.publishArr=['城西','南门','金鳌山','玉环','西门北村','西泯沟','川心街','观潮','金珠','城中','明珠花苑','湄洲','新崇','吴家弄','小港','永凤','花园弄','海岛','北门','东门','怡祥居','东河沿','城东','江山','学宫','西门南村'];
 
 	// 查看总单位
-	// p.publishArr=['崇明中学','城桥中学','扬子中学','卫生计生委','县级机关','崇明县东门中学','实验中学','农行崇明支行','崇明邮政局','城桥镇团委','公安局','崇明巴士公交公司','市场监管局','工行崇明支行','移动崇明分公司','规划土地局','人力资源和社会保障局','建管委','经委','文广影视局','农委','邮政银行','税务局','燃气公司','住房保障房屋管理局','浦发行崇明支行','崇明工业园区','建行崇明支行','水务局','交通委','育林中学','崇明电信局','农商行崇明支行','崇明客轮公司','民政局','亚通公司','联通崇明分公司','城管执法局','检验检疫局','社保','交行崇明支行','崇明电力公司','上海银行崇明支行','人民保险','申万宏源证券崇明营业部','中国人寿','海关','凌云中学','教育局','上海证券公司崇明营业部','农业发展银行','县气象局','安信农保','村镇银行','新华人寿'];
-	// p.publishArr=['崇明中学','城桥中学','扬子中学','卫生计生委','县级机关','崇明县东门中学','实验中学','农行崇明支行','崇明邮政局','城桥镇团委','公安局','崇明巴士公交公司','市场监管局','工行崇明支行','移动崇明分公司','规划土地局','人力资源和社会保障局','经委','建管委','农委','文广影视局','邮政银行','税务局','燃气公司','住房保障房屋管理局','浦发行崇明支行','崇明工业园区','建行崇明支行','水务局','交通委','农商行崇明支行','崇明电信局','崇明客轮公司','不在所属区域','民政局','亚通公司','联通崇明分公司','城管执法局','社保','检验检疫局','交行崇明支行','崇明电力公司','上海银行崇明支行','申万宏源证券崇明营业部','中国人寿','人民保险','海关','育林中学','凌云中学','教育局','上海证券公司崇明营业部','农业发展银行','县气象局','安信农保','村镇银行','新华人寿','大龄青年']
+	p.publishArr=['崇明中学','城桥中学','扬子中学','卫生计生委','县级机关','崇明县东门中学','实验中学','农行崇明支行','崇明邮政局','城桥镇团委','公安局','崇明巴士公交公司','市场监管局','工行崇明支行','移动崇明分公司','规划土地局','人力资源和社会保障局','经委','建管委','农委','文广影视局','邮政银行','税务局','燃气公司','住房保障房屋管理局','浦发行崇明支行','崇明工业园区','建行崇明支行','水务局','交通委','农商行崇明支行','崇明电信局','崇明客轮公司','不在所属区域','民政局','亚通公司','联通崇明分公司','城管执法局','社保','检验检疫局','交行崇明支行','崇明电力公司','上海银行崇明支行','申万宏源证券崇明营业部','中国人寿','人民保险','海关','育林中学','凌云中学','教育局','上海证券公司崇明营业部','农业发展银行','县气象局','安信农保','村镇银行','新华人寿','大龄青年']
+
 	// p.getAdminsByActivityTiltleLike();
 	// p.getRestAdmins();
 };
@@ -77,7 +77,7 @@ p.getGroupUserCheckInInfo = function(){
 	})
 
 };
-// 得到单位、居委的人数通过报到状态
+// 通过报到状态得到单位、居委的人数
 p.getUserCountByCheckStatus = function(searchType,status){
 	var query = new AV.Query('Users');
     query.equalTo("isShow","1");
@@ -87,9 +87,9 @@ p.getUserCountByCheckStatus = function(searchType,status){
  	}else{
     	query.notEqualTo("checkin","true");
     }
-	// query.notContainedIn('political',["单位"]);
+	query.notContainedIn('political',["单位"]);
     // query.equalTo("location","location");
-    // query.notEqualTo("location","location");
+    query.notEqualTo("location","location");
     query.count().then(function(count){
 		var arr = [
 				'<tr>',
@@ -107,7 +107,7 @@ p.getUserCountByCheckStatus = function(searchType,status){
 	});
 
 };
-
+// 模糊查询某主题下所有单位发布的活动
 p.getAdminsByActivityTiltleLike = function(){
 	var query = new AV.Query('Activities');
 	query.notEqualTo('isDelete','1');
@@ -208,12 +208,12 @@ p.getTuanUserCountByAdmins = function(){
 	query.equalTo('group',p.publishArr[p.publishTotal]);
 	// query.equalTo('group',"农委");
 	// query.containedIn('political',["青年"]);
-	query.containedIn('political',["团员","青年","党员S","预备党员S"]);
+	// query.containedIn('political',["团员","青年","党员S","预备党员S"]);
 	query.notContainedIn('political',["单位"]);
 	query.count().then(function(count){
 		var arr = [
 				'<tr>',
-					// '<td>',p.publishArr[p.publishTotal],'</td>',
+					'<td>',p.publishArr[p.publishTotal],'</td>',
 					'<td>',count,'</td>',
 				'</tr>'];
 		$('tbody').append(arr.join(''));

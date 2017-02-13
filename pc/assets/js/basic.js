@@ -16,7 +16,7 @@ AV.initialize("AOJHNpNa6yf4b51KXhkzTdhD-gzGzoHsz", "n0wVPiM0UzF0JdXzgodqTkhs");
 
 /*** pages.js  BEGIN ***/
 
-var pagestyle = '<div style="clear:both;"></div><style>.pages{color:#000;cursor:default;font-size:14px;font-family:Tahoma,Verdana;margin:0px auto;text-align:center}.pages .arrow,.pages .count,.pages .number{color:#000;font-size:10px;background:transparent}.pages .count{font-weight:700;border-right:none;padding:2px 10px 1px 10px}.pages .number{font-weight:400}.pages .number a,.pages .number span{font-size:10px}.pages .number span{padding:3px 11px 2px;border:1px solid #ccc;margin-left:-1px;background-color:#fff;cursor:pointer;color:#adadad;margin-right: 8px;font: 100 16px/16px "BrandonGrotesque","AvenirNext-Regular","Helvetica","Arial",sans-serif !important}.pages .number a{color:#adadad;text-decoration:none;    font: 100 16px/16px "BrandonGrotesque","AvenirNext-Regular","Helvetica","Arial",sans-serif !important}</style>';
+var pagestyle = '<style>.pages{color:#000;cursor:default;font-size:14px;font-family:Tahoma,Verdana;margin:0px auto;text-align:center}.pages .arrow,.pages .count,.pages .number{color:#000;font-size:10px;background:transparent}.pages .count{font-weight:700;border-right:none;padding:2px 10px 1px 10px}.pages .number{font-weight:400}.pages .number a,.pages .number span{font-size:10px}.pages .number span{padding:3px 11px 2px;border:1px solid #ccc;margin-left:-1px;background-color:#fff;cursor:pointer;color:#adadad;margin-right: 8px;font: 100 16px/16px "BrandonGrotesque","AvenirNext-Regular","Helvetica","Arial",sans-serif !important}.pages .number a{color:#adadad;text-decoration:none;    font: 100 16px/16px "BrandonGrotesque","AvenirNext-Regular","Helvetica","Arial",sans-serif !important}</style><div style="clear:both;"></div>';
 
 function showPages(name) { //初始化属性
  this.name = name;      //对象名称
@@ -46,7 +46,7 @@ showPages.prototype.createHtml = function(mode){ //生成html代码
  if (mode == '' || typeof(mode) == 'undefined') mode = 0;
  switch (mode) {
   case 1 : //模式1 (10页缩略,首页,前页,后页,尾页)
-   strHtml += '<span class="number">';
+   strHtml += ('<div class="pages"><span class="number">');
    if (prevPage < 1) {
     strHtml += '<span title="First Page">首页</span>';
     strHtml += '<span title="Prev Page">上一页</span>';
@@ -76,7 +76,7 @@ showPages.prototype.createHtml = function(mode){ //生成html代码
     strHtml += '<span title="Next Page" onclick="javascript:' + this.name + '.toPage(' + nextPage + ');"><a href="javascript:;">下一页</a></span>';
     strHtml += '<span title="Last Page" onclick="javascript:' + this.name + '.toPage(' + this.pageCount + ');"><a href="javascript:;">末页</a></span>';
    }
-   strHtml += '</span><br />';
+   strHtml += '</span></div>';
    break;
   default :
    strHtml = 'Javascript showPage Error: not find mode ' + mode;
@@ -114,9 +114,12 @@ showPages.prototype.printHtml = function(mode){ //显示html代码
  // this.page = p.page ? p.page : 1;
  this.getPage();
  this.checkPages();
- this.showTimes += 1;
- this.element.append('<div id="pages_' + this.name + '_' + this.showTimes + '" class="pages"></div>');
- document.getElementById('pages_' + this.name + '_' + this.showTimes).innerHTML = this.createHtml(mode);
+ // this.showTimes += 1;
+ // this.element.append('<div id="pages_' + this.name + '_' + this.showTimes + '" class="pages"></div>');
+ // document.getElementById('pages_' + this.name + '_' + this.showTimes).innerHTML = this.createHtml(mode);
+ this.element.html(pagestyle+this.createHtml(mode));
+
+
 };
 showPages.prototype.formatInputPage = function(e){ //限定输入页数格式
  var ie = navigator.appName=="Microsoft Internet Explorer"?true:false;
