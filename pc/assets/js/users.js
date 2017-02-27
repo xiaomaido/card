@@ -1,15 +1,13 @@
 var p = {
   'className': 'Users',
   'page': 1,
-  'size': 5
+  'size': 10
 };
 p.init = function(){
   p.page = misc.getParam('page') || 1;
   $j_pagenation = $('.j_pagenation');
   p.loadDatas();
   p.initEvent();
-  p.userName="";
-  p.userPwd="";
 };
 p.loadPagination = function(){
   pg.pageCount = p.maxPage; // 定义总页数(必要)
@@ -204,21 +202,17 @@ function createLateEvent(){
             u.save(null, {
               success: function(data) {
                 // userObj.logOut();
-                // AV.User.logOut();
-                // AV.User.logIn(p.userName, p.userPwd, {
-                //     success: function(user) {
-                //       if(user && user.getObjectId()){
-                //         if(user.get('userRole') != 'Users'){
-                //             // if(user.get('userRole') == 'SuperAdmin'){
-                //             // fillAlert('登录成功,正在连接后台系统');
-                //             // waitRedirect('dashboard.html',1000);
-                //         }
-                //       }
-                //     },
-                //     error: function(user, error) {
-                //       fillAlert(errorEnum[error.code].msg);
-                //     }
-                // });
+                AV.User.logOut();
+                AV.User.logIn("admin", "admin", {
+                    success: function(user) {
+                      if(user && user.getObjectId()){
+                          waitRedirect('users.html',400);
+                      }
+                    },
+                    error: function(user, error) {
+                      fillAlert(errorEnum[error.code].msg);
+                    }
+                });
               },
               error: function(data, error) {
                 alert("添加失败 " + error.message);

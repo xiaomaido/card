@@ -225,7 +225,18 @@ function createLateEvent(){
             u.set('pid',data.id);
             u.save(null, {
               success: function(data) {
-                userObj.logOut();
+                // userObj.logOut();
+                AV.User.logOut();
+                AV.User.logIn("admin", "admin", {
+                    success: function(user) {
+                      if(user && user.getObjectId()){
+                          waitRedirect('users.html',400);
+                      }
+                    },
+                    error: function(user, error) {
+                      fillAlert(errorEnum[error.code].msg);
+                    }
+                });
               },
               error: function(data, error) {
                 alert("添加失败 " + error.message);

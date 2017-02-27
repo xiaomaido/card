@@ -66,16 +66,16 @@ p.loadDatas = function(){
             $group.val(p.groupArr.join('$'));
           }
           
-          if(userObj.currentUser.get('userRole')!=='SuperAdmin'){
-            $('input,select,textarea').attr('disabled', 'disabled');
+          // if(userObj.currentUser.get('userRole')!=='SuperAdmin'){
+            // $('input,select,textarea').attr('disabled', 'disabled');
 
-            if(p.groupArr && p.groupArr.length>0 && p.groupArr[0]==userObj.currentUser.id){
-              $('.political,.job,.address,.mobile').removeAttr('disabled');
-            }
-            else{
-              $('.j_btn_modify').parent().remove();
-            }
-          }
+            // if(p.groupArr && p.groupArr.length>0 && p.groupArr[0]==userObj.currentUser.id){
+            //   $('.political,.job,.address,.mobile').removeAttr('disabled');
+            // }
+            // else{
+            //   $('.j_btn_modify').parent().remove();
+            // }
+          // }
 
       }
       else{
@@ -100,7 +100,7 @@ p.initEvent = function(){
           data.set('mobile',$.trim($('.mobile').val()));
           data.set('address',$.trim($('.address').val()));
           data.set('political',$.trim($('.political').val()));
-          if(userObj.currentUser.get('userRole')=='SuperAdmin'){
+          // if(userObj.currentUser.get('userRole')=='SuperAdmin'){
             if($.trim($('.birthDate').val())){
               data.set('birthDate',strToDate($.trim($('.birthDate').val())));
             }
@@ -109,7 +109,7 @@ p.initEvent = function(){
             data.set('flagNumber',$.trim($('.flagNumber').val()));
             data.set("location",$location.val().split('$'));//居委
             data.set("group",$group.val().split('$'));//单位
-          }
+          // }
 
           data.save(null,{
             success: function(d){
